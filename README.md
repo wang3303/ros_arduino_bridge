@@ -131,7 +131,7 @@ Installation of the ros\_arduino\_bridge Stack
 ----------------------------------------------
 
     $ cd ~/catkin_workspace/src
-    $ git clone https://github.com/hbrobotics/ros_arduino_bridge.git
+    $ git clone https://github.com/wang3303/ros_arduino_bridge.git
     $ cd ~/catkin_workspace
     $ catkin_make
 

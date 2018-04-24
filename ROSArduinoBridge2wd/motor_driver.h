@@ -3,6 +3,8 @@
    *************************************************************/
 
 #ifdef L298_MOTOR_DRIVER
+  // Pins can be changed
+  // However, ENABLE PINS must be able to support AnalogWrite
   #define RIGHT_MOTOR_BACKWARD 11
   #define LEFT_MOTOR_BACKWARD 12
   #define RIGHT_MOTOR_FORWARD  9

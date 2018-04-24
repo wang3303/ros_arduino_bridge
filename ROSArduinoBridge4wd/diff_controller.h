@@ -23,16 +23,16 @@ typedef struct {
   * to allow tuning changes,
   * see http://brettbeauregard.com/blog/2011/04/improving-the-beginner%E2%80%99s-pid-tuning-changes/
   */
-  //int Ierror;
   int ITerm;                    //integrated term
 
   long output;                    // last motor setting
 }
 SetPointInfo;
 
+// initiate four wheels
 SetPointInfo leftPID, rightPID,left2PID,right2PID;
 
-/* PID Parameters */
+/* init PID Parameters*/
 int Kp = 800;
 int Kd = 1350;
 int Ki = 1;
@@ -89,9 +89,9 @@ void doPID(SetPointInfo * p) {
   long output;
   int input;
 
-  //Perror = p->TargetTicksPerFrame - (p->Encoder - p->PrevEnc);
   input = p->Encoder - p->PrevEnc;
-  // Low Pass
+  // Low Pass filter
+  // If the encoder reading is noisy, try average filter or median filter.
   int enc_change = 0.5*input+0.5*p->PrevEncD;
   Perror = p->TargetTicksPerFrame - enc_change;
   p->PrevEncD = enc_change;
@@ -108,7 +108,7 @@ void doPID(SetPointInfo * p) {
 
   output += p->output;
   // Accumulate Integral error *or* Limit output.
-  // Stop accumulating when output saturates
+  // Stop accumulating when output saturates(anti wind-up)
   if (output >= MAX_PWM)
     output = MAX_PWM;
   else if (output <= -MAX_PWM)
